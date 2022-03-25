@@ -1,0 +1,150 @@
+$font-color: #444;
+
+* {
+  font-family: Avenir,"Lato","애플 SD 산돌고딕 Neo","Apple SD Gothic Neo","나눔바른고딕",NanumBarunGothic,"나눔고딕",NanumGothic,"맑은 고딕","Malgun Gothic","돋움",dotum,AppleGothic,sans-serif;
+  font-size: 14px;
+}
+
+a {
+  color: $font-color;
+  text-decoration: none;
+}
+
+section.gnb {
+  height: 65px;
+  border-bottom: 1px solid #d9d9d9;
+  padding: 0.4em;
+  display: flex;
+  line-height: 30px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 999;
+  box-sizing: border-box;
+
+  .site-title {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    span {
+      font-size: .625em;
+      font-weight: normal;
+      display: block;
+    }
+  }
+}
+
+section.contents {
+  margin-top: 70px;
+  padding: 10px;
+
+  section {
+    &.sidebar {
+      float: right;
+      width: 230px;
+      border-left: 1px solid #ececec;
+      padding-left: 20px;
+      display: block;
+
+      article {
+        &.bio {
+          border: 1px solid #d9d9d9;
+          border-radius: 3px;
+          padding: 10px;
+          box-sizing: border-box;
+          text-align: center;
+
+          div {
+            width: 100%;
+            &.avatar {
+              width: 100%;
+              margin-left: auto;
+              margin-right: auto;
+              img {
+                padding: 5px;
+                border: 1px solid #f2f3f3;
+                max-width: 110px;
+                border-radius: 50%;
+                box-sizing: border-box;
+              }
+            }
+            &.author {
+              margin-top: 10px;
+              div {
+                &.author__name {
+                  font-size: 18px;
+                  text-transform: uppercase;
+                  display: block;
+                  font-weight: bold;
+                }
+                &.author__description {
+                  color: #999;
+                  font-size: 14px;
+                  margin-top: 10px;
+                  margin-bottom: 20px;
+                }
+              }
+            }
+          }
+
+          ul {
+            &,li {
+              list-style: none;
+              margin: 0;
+              padding: 0;
+            }
+            width: 100%;
+            display: table;
+            &.blog__statistics {
+              margin-bottom: 10px;
+              li {
+                display: table-cell;
+                width: 33.3%;
+                border-right: 1px solid #d9d9d9;
+                box-sizing: border-box;
+                div {
+                  &:first-child {
+                    color: #222;
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                  }
+                  &:last-child {
+                    color: #999;
+                    font-size: 13px;
+                  }
+                }
+
+                &:last-child {
+                  border: none;
+                }
+              }
+            }
+            &.author__urls {
+              li {
+                float: right;
+                svg {
+                  color: #3d4144;
+                }
+                &:first-child {
+                  float: left;
+                  display: inline-block;
+                  svg {
+                    margin-right: 5px;
+                  }
+                  span {
+                    font-size: 14px;
+                    box-sizing: border-box;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+}
