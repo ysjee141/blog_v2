@@ -11,6 +11,7 @@ import {StaticImage} from "gatsby-plugin-image"
 import {css} from "@emotion/react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEnvelopeSquare, faLocationDot} from "@fortawesome/free-solid-svg-icons";
+import {faGithub, faInstagram} from "@fortawesome/free-brands-svg-icons";
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
@@ -20,11 +21,15 @@ const Bio = () => {
           author {
             name
             summary
+            image
           }
           social {
             twitter
           }
         }
+      }
+      allMarkdownRemark {
+       totalCount
       }
     }
   `)
@@ -32,6 +37,9 @@ const Bio = () => {
   // Set these values by editing "siteMetadata" in gatsby-config.js
   const author = data.site.siteMetadata?.author
   const social = data.site.siteMetadata?.social
+  const postCount = data.allMarkdownRemark.totalCount;
+
+  console.log(author)
 
   return (
     <article className="bio">
@@ -39,7 +47,7 @@ const Bio = () => {
         <StaticImage
           layout="fixed"
           formats={["auto", "webp", "avif"]}
-          src="https://ysjee141.github.io/blog/assets/img/profile.jpg"
+          src="../assets/images/profile.jpg"
           css={css`margin-left: auto;
             margin-right: auto`}
           width={110}
@@ -49,13 +57,13 @@ const Bio = () => {
         />
       </div>
       <div className='author'>
-        <div className="author__name">YOONSEON JI</div>
-        <div className='author__description'>개발을 좋아하는 천생 개발자이고 싶은 개발자</div>
+        <div className="author__name">{author.name}</div>
+        <div className='author__description'>{author.summary}</div>
       </div>
       <ul className='blog__statistics'>
         <li>
           <Link to='/'>
-            <div>11</div>
+            <div>{postCount}</div>
             <div>POSTS</div>
           </Link>
         </li>
@@ -84,25 +92,15 @@ const Bio = () => {
         </li>
         <li>
           <a href="https://github.com/ysjee141" title="GitHub" target="_blank" rel="nofollow noopener noreferrer">
-            <FontAwesomeIcon icon={faEnvelopeSquare}/>
+            <FontAwesomeIcon icon={faGithub}/>
           </a>
         </li>
         <li>
           <a href="https://instagram.com/ysjee141" title="Instagram" target="_blank" rel="nofollow noopener noreferrer">
-            <FontAwesomeIcon icon={faEnvelopeSquare}/>
+            <FontAwesomeIcon icon={faInstagram}/>
           </a>
         </li>
       </ul>
-
-      {author?.name && (
-        <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
-          </a>
-        </p>
-      )}
     </article>
   )
 }

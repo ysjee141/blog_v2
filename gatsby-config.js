@@ -5,8 +5,9 @@ module.exports = {
       subTitle: `심심해서 끄적거리는 낙서장`,
     },
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `YOONSEONG JI`,
+      summary: `개발을 좋아하는 천생 개발자이고 싶은 개발자`,
+      image: "../assets/images/profile.jpg"
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
     siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
