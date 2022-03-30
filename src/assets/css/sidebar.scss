@@ -1,0 +1,15 @@
+section.sidebar {
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+  width: 230px;
+  border-left: 1px solid #ececec;
+  padding-left: 20px;
+  padding-top: 25px;
+  box-sizing: border-box;
+  flex: 1;
+  justify-content: flex-end;
+
+  @import "bio";
+  @import "category";
+}

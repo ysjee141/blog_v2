@@ -1,14 +1,135 @@
 $font-color: #444;
 
+@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+@import "mixin";
+
+@import "paging";
+
+body {
+  animation: fadein 2s;
+  -moz-animation: fadein 2s; /* Firefox */
+  -webkit-animation: fadein 2s; /* Safari and Chrome */
+  -o-animation: fadein 2s; /* Opera */
+}
+@keyframes fadein {
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}
+@-moz-keyframes fadein { /* Firefox */
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}
+@-o-keyframes fadein { /* Opera */
+  from {
+    opacity:0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+
 * {
   font-family: Avenir,"Lato","애플 SD 산돌고딕 Neo","Apple SD Gothic Neo","나눔바른고딕",NanumBarunGothic,"나눔고딕",NanumGothic,"맑은 고딕","Malgun Gothic","돋움",dotum,AppleGothic,sans-serif;
-  font-size: 14px;
+  font-size: 20px;
+  box-sizing: border-box;
+}
+
+main {
+  //display: flex;
 }
 
 div.global-wrapper {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
+
+  footer {
+    @media screen  and (max-width: 600px) {
+      padding-left: 15px;
+      display: inherit;
+    }
+    * {
+      color: #fff !important;
+    }
+    display: flex;
+    font-size: 0.7em;
+    background-color: #aa7cc0;
+    clear: both;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    padding: 13px calc((100% - 1300px) / 2);
+    div.copyright {
+      flex: 1;
+      font-size: 1em;
+      display: inline-block;
+      padding-top: 4px;
+      //flex: 1;
+      a {
+        font-size: 1.1em;
+        font-weight: bold;
+      }
+    }
+
+    a {
+      font-size: 1em;
+    }
+
+    ul.follow {
+      &,li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+      }
+      li {
+        font-size: .7em;
+        margin-right: 10px;
+        &.follow__title {
+          font-weight: bold;
+        }
+        svg {
+          margin-right: 5px;
+          height: 0.8em;
+          position: relative;
+          top: 1px;
+        }
+      }
+    }
+  }
+
+
+}
+
+div {
+  &.is-divider {
+    height: 3px;
+    display: block;
+    background-color: rgba(0,0,0,0.1);
+    margin: 0.66em 0 1em;
+    width: 100%;
+    max-width: 30px;
+  }
 }
 
 a {
@@ -16,149 +137,17 @@ a {
   text-decoration: none;
 }
 
-section.gnb {
-  height: 65px;
-  border-bottom: 1px solid #d9d9d9;
-  padding: 0.4em;
-  display: flex;
-  line-height: 30px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding-left: calc((100% - 1280px) / 2 );
-  padding-right: calc((100% - 1280px) / 2 );
-  width: 100%;
-  background-color: #fff;
-  z-index: 999;
-  box-sizing: border-box;
-
-  .site-title {
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 20px;
-    span {
-      font-size: .625em;
-      font-weight: normal;
-      display: block;
-    }
-  }
-}
+@import "gnb";
 
 section.contents {
-  margin-top: 70px;
-  padding: 10px;
-
-  section {
-    &.sidebar {
-      float: right;
-      width: 230px;
-      border-left: 1px solid #ececec;
-      padding-left: 20px;
-      display: block;
-
-      article {
-        &.bio {
-          border: 1px solid #d9d9d9;
-          border-radius: 3px;
-          padding: 10px;
-          box-sizing: border-box;
-          text-align: center;
-
-          div {
-            width: 100%;
-            &.avatar {
-              width: 100%;
-              margin-left: auto;
-              margin-right: auto;
-              img {
-                padding: 5px;
-                border: 1px solid #f2f3f3;
-                max-width: 110px;
-                border-radius: 50%;
-                box-sizing: border-box;
-              }
-            }
-            &.author {
-              margin-top: 10px;
-              div {
-                &.author__name {
-                  font-size: 18px;
-                  text-transform: uppercase;
-                  display: block;
-                  font-weight: bold;
-                }
-                &.author__description {
-                  color: #999;
-                  font-size: 14px;
-                  margin-top: 10px;
-                  margin-bottom: 20px;
-                }
-              }
-            }
-          }
-
-          ul {
-            &,li {
-              list-style: none;
-              margin: 0;
-              padding: 0;
-            }
-            width: 100%;
-            display: table;
-            &.blog__statistics {
-              margin-bottom: 20px;
-              li {
-                display: table-cell;
-                width: 33.3%;
-                border-right: 1px solid #d9d9d9;
-                box-sizing: border-box;
-                div {
-                  &:first-child {
-                    color: #222;
-                    font-size: 16px;
-                    margin-bottom: 5px;
-                    font-weight: bold;
-                  }
-                  &:last-child {
-                    color: #999;
-                    font-size: 13px;
-                  }
-                }
-
-                &:last-child {
-                  border: none;
-                }
-              }
-            }
-            &.author__urls {
-              li {
-                float: right;
-                svg {
-                  color: #3d4144;
-                  font-size: 18px;
-                  margin-right: 5px;
-                  &[data-icon='instagram'] {
-                    color: #517fa4;
-                  }
-                  &[data-icon='github'] {
-                    color: #171516;
-                  }
-                }
-                &:first-child {
-                  float: left;
-                  display: inline-block;
-                  span {
-                    font-size: 14px;
-                    box-sizing: border-box;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
-    }
+  padding: 60px 20px 20px;
+  position: relative;
+  display: flex;
+  &.block {
+    display: block;
   }
-
+  @import "sidebar";
+  @import "content-wrapper";
 }
+
+@import 'archive-list';

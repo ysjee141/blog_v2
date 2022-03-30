@@ -1,0 +1,8 @@
+section.contents__wrapper {
+  @media screen  and (max-width: 600px) {
+    width: 100%;
+  }
+  width: calc(100% - 230px);
+  padding-top: 15px;
+  padding-right: 10px;
+}

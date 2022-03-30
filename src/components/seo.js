@@ -22,7 +22,9 @@ const Seo = ({ description, lang, meta, title }) => {
             }
             description
             social {
-              twitter
+              name
+              url
+              icon
             }
           }
         }
@@ -47,7 +49,7 @@ const Seo = ({ description, lang, meta, title }) => {
         },
         {
           property: `og:title`,
-          content: title.text,
+          content: title,
         },
         {
           property: `og:description`,
@@ -67,7 +69,7 @@ const Seo = ({ description, lang, meta, title }) => {
         },
         {
           name: `twitter:title`,
-          content: title.text,
+          content: title,
         },
         {
           name: `twitter:description`,

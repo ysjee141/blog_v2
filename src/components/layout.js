@@ -1,43 +1,78 @@
 import * as React from "react"
-import { Link } from "gatsby"
 import GlobalHeader from '../components/GlobalHeader'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSquareRss} from "@fortawesome/free-solid-svg-icons";
+import {graphql, Link, useStaticQuery} from "gatsby";
+import Social from "./Social";
+import Bio from "./bio";
+import Categories from "./Categories";
+import {startsWithArray} from "../utils/StringUtils";
 
-const Layout = ({ location, title, children }) => {
+const Layout = ({location, title, children}) => {
   const rootPath = `${__PATH_PREFIX__}/`
-  const isRootPath = location.pathname === rootPath
-  let header
-
-
-
-  // if (isRootPath) {
-  //   header = (
-  //     <h1 className="main-heading">
-  //       <Link to="/">{title}</Link>
-  //     </h1>
-  //   )
-  // } else {
-  //   header = (
-  //     <Link className="header-link-home" to="/">
-  //       {title.text}
-  //     </Link>
-  //   )
-  // }
-
+  const isShowSidebar = startsWithArray(location.pathname,["/list", "/category"])
+    || location.pathname === rootPath;
+  const social = useStaticQuery(graphql`
+  query {
+    site {
+      siteMetadata {
+        social {
+          name
+          url
+          icon
+        }
+      }
+    }
+    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+      nodes {
+        excerpt
+        fields {
+          slug
+        }
+        frontmatter {
+          date(formatString: "MMMM DD, YYYY")
+          title
+          category
+          description
+          tags
+        }
+      }
+    }
+  }
+`).site.siteMetadata.social;
   return (
-    <div className="global-wrapper" data-is-root-path={isRootPath}>
-      {/*<header className="global-header">{header}</header>*/}
+    <div className="global-wrapper">
       <GlobalHeader title={title}/>
-      <section className="contents">
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
-        </footer>
+      <section className={`contents ${!isShowSidebar && 'block'}`}>
+        {children}
+        {isShowSidebar && (
+          <section className='sidebar'>
+            <Bio/>
+            <Categories/>
+          </section>
+        )}
       </section>
-
+      <footer>
+        <div className="copyright">
+          © {new Date().getFullYear()} HAPPL. Built with{` `}
+          <a href="https://www.gatsbyjs.com" target='_blank' rel='noreferrer'>Gatsby</a>
+        </div>
+        <ul className="follow">
+          <li key="follow" className="follow__title">팔로우 :</li>
+          {social.map(s => s.name !== 'email' && (
+            <Social key={s.name} social={s}/>
+          ))}
+          <li>
+            <Link to="/rss.xml">
+              <FontAwesomeIcon icon={faSquareRss} color='#fa9b39'/>
+              FEED
+            </Link>
+          </li>
+        </ul>
+      </footer>
     </div>
   )
 }
+
 
 export default Layout

@@ -10,8 +10,8 @@ import {graphql, Link, useStaticQuery} from "gatsby"
 import {StaticImage} from "gatsby-plugin-image"
 import {css} from "@emotion/react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEnvelopeSquare, faLocationDot} from "@fortawesome/free-solid-svg-icons";
-import {faGithub, faInstagram} from "@fortawesome/free-brands-svg-icons";
+import {faLocationDot} from "@fortawesome/free-solid-svg-icons";
+import Social from "./Social";
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
@@ -24,7 +24,9 @@ const Bio = () => {
             image
           }
           social {
-            twitter
+            name
+            url
+            icon
           }
         }
       }
@@ -38,8 +40,6 @@ const Bio = () => {
   const author = data.site.siteMetadata?.author
   const social = data.site.siteMetadata?.social
   const postCount = data.allMarkdownRemark.totalCount;
-
-  console.log(author)
 
   return (
     <article className="bio">
@@ -85,21 +85,9 @@ const Bio = () => {
           <FontAwesomeIcon icon={faLocationDot}/>
           <span>Seoul, Korea</span>
         </li>
-        <li>
-          <a href="mailto:ysjee141@gmail.com" title="Email" target="_blank" rel="nofollow noopener noreferrer">
-            <FontAwesomeIcon icon={faEnvelopeSquare}/>
-          </a>
-        </li>
-        <li>
-          <a href="https://github.com/ysjee141" title="GitHub" target="_blank" rel="nofollow noopener noreferrer">
-            <FontAwesomeIcon icon={faGithub}/>
-          </a>
-        </li>
-        <li>
-          <a href="https://instagram.com/ysjee141" title="Instagram" target="_blank" rel="nofollow noopener noreferrer">
-            <FontAwesomeIcon icon={faInstagram}/>
-          </a>
-        </li>
+        {social.map(s => (
+          <Social key={s.name} social={s} isText={false}/>
+        ))}
       </ul>
     </article>
   )

@@ -26,6 +26,74 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     `
   )
 
+  const listResult = await graphql(
+    `
+    {
+        allMarkdownRemark(
+          sort: { fields: [frontmatter___date], order: DESC }
+        ) {
+          edges {
+            node {
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                category
+                date
+                description
+                tags
+              }
+              excerpt
+            }
+          }
+          pageInfo {
+            currentPage
+            hasNextPage
+            hasPreviousPage
+            pageCount
+            perPage
+            totalCount
+          }
+        }
+      }    
+    `
+  )
+
+  const categoryListResult = await graphql(
+    `
+    {
+        allMarkdownRemark(
+          sort: { fields: [frontmatter___date], order: DESC }
+        ) {
+          edges {
+            node {
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                category
+                date
+                description
+                tags
+              }
+              excerpt
+            }
+          }
+          pageInfo {
+            currentPage
+            hasNextPage
+            hasPreviousPage
+            pageCount
+            perPage
+            totalCount
+          }
+        }
+      }    
+    `
+  )
+
   if (result.errors) {
     reporter.panicOnBuild(
       `There was an error loading your blog posts`,
@@ -56,6 +124,98 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       })
     })
   }
+
+  const edges = listResult.data.allMarkdownRemark.edges
+  const postsPerPage = 10
+  const numPages = Math.ceil(edges.length / postsPerPage)
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/list` : `/list/${i + 1}`,
+      component: path.resolve("./src/templates/blog-list-template.js"),
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+        filter: {}
+      },
+    })
+  })
+
+  const categoryMap = new Map();
+  const tagMap = new Map();
+
+  edges.forEach(p => {
+    const category = p.node.frontmatter.category || "NoCategory";
+    const categoryObject = categoryMap.get(category) || [];
+    categoryObject.push(p)
+    categoryMap.set(category, categoryObject)
+
+    const tags = p.node.frontmatter.tags || [];
+    tags.forEach(t => {
+      console.log("===================> %o", t)
+      const tagObject = tagMap.get(t) || []
+      tagObject.push(p)
+      tagMap.set(t, tagObject)
+    })
+  })
+
+
+  categoryMap.forEach((value, c) => {
+    const numPages = Math.ceil(value.length / postsPerPage);
+    Array.from({length: numPages}).forEach((_, i) => {
+      const prefix = c === undefined ? 'NoCategory' : c;
+      createPage({
+        path: i === 0 ? `/category/${prefix}` : `/category/${prefix}/${i+1}`,
+        component: path.resolve("./src/templates/blog-list-template.js"),
+        context: {
+          info: {
+            type: 'category',
+            value: c
+          },
+          limit: postsPerPage,
+          skip: i * postsPerPage,
+          numPages,
+          currentPage: i + 1,
+          filter: {
+            frontmatter: {
+              category: {
+                eq: c
+              }
+            }
+          }
+        },
+      })
+    })
+  })
+
+  tagMap.forEach((value, c) => {
+    const numPages = Math.ceil(value.length / postsPerPage);
+    Array.from({length: numPages}).forEach((_, i) => {
+      const prefix = c === undefined ? 'NoTag' : c;
+      createPage({
+        path: i === 0 ? `/tag/${prefix}` : `/tag/${prefix}/${i+1}`,
+        component: path.resolve("./src/templates/blog-list-template.js"),
+        context: {
+          info: {
+            type: 'tag',
+            value: c
+          },
+          limit: postsPerPage,
+          skip: i * postsPerPage,
+          numPages,
+          currentPage: i + 1,
+          filter: {
+            frontmatter: {
+              tags: {
+                in: c
+              }
+            }
+          }
+        },
+      })
+    })
+  })
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -73,7 +233,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createFieldExtension, createTypes } = actions
 
   // Explicitly define the siteMetadata {} object
   // This way those will always be defined even if removed from gatsby-config.js
@@ -81,12 +241,24 @@ exports.createSchemaCustomization = ({ actions }) => {
   // Also explicitly define the Markdown frontmatter
   // This way the "MarkdownRemark" queries will return `null` even when no
   // blog posts are stored inside "content/blog" instead of returning an error
+
+  createFieldExtension({
+    name: "category",
+    extend(options, prevFieldConfig) {
+      return {
+        resolve(source) {
+          return source.category === undefined ? 'NoCategory' : `${source.category}`
+        },
+      }
+    },
+  })
+
   createTypes(`
     type SiteSiteMetadata {
       title: Title
       author: Author
       siteUrl: String
-      social: Social
+      social: [Social]
     }
     
     type Title {
@@ -101,7 +273,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type Social {
-      twitter: String
+      name: String
+      url: String
+      icon: String
     }
 
     type MarkdownRemark implements Node {
@@ -113,6 +287,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       description: String
       date: Date @dateformat
+      category: String @category
+      tags: [String]
     }
 
     type Fields {

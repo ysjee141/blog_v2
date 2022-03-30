@@ -11,9 +11,23 @@ module.exports = {
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
     siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
-    social: {
-      twitter: `kylemathews`,
-    },
+    social: [
+      {
+        name: 'email',
+        url: `mailto:ysjee141@gmail.com`,
+        icon: 'faEnvelopeSquare'
+      },
+      {
+        name: 'github',
+        url: `https://github.com/ysjee141`,
+        icon: 'faGithub'
+      },
+      {
+        name: 'instagram',
+        url: `https://instagram.com/ysjee141`,
+        icon: 'faInstagram'
+      }
+    ],
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -71,7 +85,10 @@ module.exports = {
           {
             site {
               siteMetadata {
-                title
+                title {
+                  text
+                  subTitle                
+                }
                 description
                 siteUrl
                 site_url: siteUrl
