@@ -31,6 +31,11 @@ const Bio = () => {
         }
       }
       allMarkdownRemark {
+       nodes {
+         frontmatter {
+           tags
+         }
+       }
        totalCount
       }
     }
@@ -40,6 +45,13 @@ const Bio = () => {
   const author = data.site.siteMetadata?.author
   const social = data.site.siteMetadata?.social
   const postCount = data.allMarkdownRemark.totalCount;
+
+  const tags = new Set()
+  data.allMarkdownRemark.nodes.map(n => {
+    n.frontmatter?.tags?.filter(t => t !== '').forEach(t => tags.add(t))
+  })
+
+  console.log(tags)
 
   return (
     <article className="bio">
@@ -69,7 +81,7 @@ const Bio = () => {
         </li>
         <li>
           <Link to='/'>
-            <div>11</div>
+            <div>{tags.size}</div>
             <div>TAGS</div>
           </Link>
         </li>

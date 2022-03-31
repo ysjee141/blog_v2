@@ -58,6 +58,14 @@ main {
   //display: flex;
 }
 
+div.on__top__icon {
+  width: 20px;
+  position: fixed;
+  bottom: 10px;
+  right: 580px;
+  z-index: 9999;
+}
+
 div.global-wrapper {
   max-width: 1280px;
   margin-left: auto;

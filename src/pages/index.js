@@ -1,14 +1,11 @@
 import * as React from "react"
-import {graphql, Link} from "gatsby"
+import {graphql} from "gatsby"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import Categories from "../components/Categories";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {far} from '@fortawesome/free-regular-svg-icons'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Pagination from "../components/pagination";
 import BlogList from "../components/BlogList";
 
 library.add(far);

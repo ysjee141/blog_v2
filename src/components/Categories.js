@@ -41,7 +41,7 @@ const Categories = ({location}) => {
     const tag = post.frontmatter.tags || [];
     let count = sideData.categories.get(category) || 0;
     sideData.categories.set(category, ++count);
-    tag.forEach((v, k) => {
+    tag?.filter(t => t !== '').forEach((v, k) => {
       count = sideData.tags.get(v) || 0;
       sideData.tags.set(v, ++count)
     })
@@ -80,7 +80,7 @@ const Categories = ({location}) => {
           <span className="category__sub-title">Recent Posts</span>
           <div className="is-divider small" />
           {sideData.tags && Array.from(sideData.tags).map((i) => (
-            <Link key={`tag-${i[0]}`} to={`/blog/tag/${i[0]}`}>#{i[0]}</Link>
+            <Link key={`tag-${i[0]}`} to={`/tag/${i[0]}`}>#{i[0]}</Link>
           ))}
         </li>
       </ul>

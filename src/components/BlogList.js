@@ -38,12 +38,9 @@ const BlogList = ({posts, pageInfo}) => {
                     }}
                     itemProp="description"
                   />
-                  {tags && tags.map(t => (
+                  {tags && tags.filter(t => t !== '').map(t => (
                     <Link key={`list-tag-${t}`} to={`/tag/${t}`} className='archive__tag'>#{t}</Link>
                   ))}
-                  {/*<Link to='/' className='archive__tag'>#Spring</Link>*/}
-                  {/*<Link to='/' className='archive__tag'>#Spring</Link>*/}
-                  {/*<Link to='/' className='archive__tag'>#Spring</Link>*/}
                 </section>
               </article>
             </li>

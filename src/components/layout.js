@@ -10,7 +10,7 @@ import {startsWithArray} from "../utils/StringUtils";
 
 const Layout = ({location, title, children}) => {
   const rootPath = `${__PATH_PREFIX__}/`
-  const isShowSidebar = startsWithArray(location.pathname,["/list", "/category"])
+  const isShowSidebar = startsWithArray(location.pathname, ["/list", "/category", "/tag"])
     || location.pathname === rootPath;
   const social = useStaticQuery(graphql`
   query {
@@ -20,21 +20,6 @@ const Layout = ({location, title, children}) => {
           name
           url
           icon
-        }
-      }
-    }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      nodes {
-        excerpt
-        fields {
-          slug
-        }
-        frontmatter {
-          date(formatString: "MMMM DD, YYYY")
-          title
-          category
-          description
-          tags
         }
       }
     }

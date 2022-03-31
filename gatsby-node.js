@@ -152,14 +152,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     categoryMap.set(category, categoryObject)
 
     const tags = p.node.frontmatter.tags || [];
-    tags.forEach(t => {
-      console.log("===================> %o", t)
+    tags.filter(t => t !== '').forEach(t => {
       const tagObject = tagMap.get(t) || []
       tagObject.push(p)
       tagMap.set(t, tagObject)
     })
   })
-
 
   categoryMap.forEach((value, c) => {
     const numPages = Math.ceil(value.length / postsPerPage);
@@ -247,7 +245,18 @@ exports.createSchemaCustomization = ({ actions }) => {
     extend(options, prevFieldConfig) {
       return {
         resolve(source) {
-          return source.category === undefined ? 'NoCategory' : `${source.category}`
+          return source.category || "NoCategory"
+        },
+      }
+    },
+  })
+
+  createFieldExtension({
+    name: "tags",
+    extend(options, prevFieldConfig) {
+      return {
+        resolve(source) {
+          return source.tags || ['']
         },
       }
     },
@@ -287,8 +296,10 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       description: String
       date: Date @dateformat
-      category: String @category
+      category: String! @category
       tags: [String]
+      published: Boolean!
+      refs: [String]!
     }
 
     type Fields {
