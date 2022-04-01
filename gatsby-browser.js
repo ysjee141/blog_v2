@@ -9,12 +9,3 @@ import "./src/assets/css/common.scss"
 
 // Highlighting for code blocks
 import "prismjs/themes/prism.css"
-
-
-document.addEventListener("scroll", (e) => {
-
-  if(window.scrollY > 100) {
-    console.log('a', e);
-  }
-})
-

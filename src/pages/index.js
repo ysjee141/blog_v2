@@ -4,11 +4,10 @@ import {graphql} from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import {library} from "@fortawesome/fontawesome-svg-core";
-import {far} from '@fortawesome/free-regular-svg-icons'
+// import {library} from "@fortawesome/fontawesome-svg-core";
+// import {far} from '@fortawesome/free-regular-svg-icons'
 import BlogList from "../components/BlogList";
-
-library.add(far);
+// library.add(far);
 
 const BlogIndex = ({data, location}) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`

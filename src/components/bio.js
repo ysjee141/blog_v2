@@ -6,7 +6,7 @@
  */
 
 import * as React from "react"
-import {graphql, Link, useStaticQuery} from "gatsby"
+import {graphql, useStaticQuery} from "gatsby"
 import {StaticImage} from "gatsby-plugin-image"
 import {css} from "@emotion/react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -51,8 +51,6 @@ const Bio = () => {
     n.frontmatter?.tags?.filter(t => t !== '').forEach(t => tags.add(t))
   })
 
-  console.log(tags)
-
   return (
     <article className="bio">
       <div className='avatar'>
@@ -74,22 +72,16 @@ const Bio = () => {
       </div>
       <ul className='blog__statistics'>
         <li>
-          <Link to='/'>
-            <div>{postCount}</div>
-            <div>POSTS</div>
-          </Link>
+          <div>{postCount}</div>
+          <div>POSTS</div>
         </li>
         <li>
-          <Link to='/'>
-            <div>{tags.size}</div>
-            <div>TAGS</div>
-          </Link>
+          <div>{tags.size}</div>
+          <div>TAGS</div>
         </li>
         <li>
-          <Link to='/'>
-            <div>D+606</div>
-            <div>OPENED</div>
-          </Link>
+          <div>D+606</div>
+          <div>OPENED</div>
         </li>
       </ul>
       <ul className='author__urls'>

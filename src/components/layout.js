@@ -7,6 +7,12 @@ import Social from "./Social";
 import Bio from "./bio";
 import Categories from "./Categories";
 import {startsWithArray} from "../utils/StringUtils";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {far} from "@fortawesome/free-regular-svg-icons";
+import { defineCustomElements as deckDeckGoHighlightElement } from "@deckdeckgo/highlight-code/dist/loader";
+
+deckDeckGoHighlightElement();
+library.add(far);
 
 const Layout = ({location, title, children}) => {
   const rootPath = `${__PATH_PREFIX__}/`
@@ -27,7 +33,7 @@ const Layout = ({location, title, children}) => {
 `).site.siteMetadata.social;
   return (
     <div className="global-wrapper">
-      <GlobalHeader title={title}/>
+      <GlobalHeader title={title} location={location}/>
       <section className={`contents ${!isShowSidebar && 'block'}`}>
         {children}
         {isShowSidebar && (

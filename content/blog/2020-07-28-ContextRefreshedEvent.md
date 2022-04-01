@@ -1,6 +1,7 @@
 ---
 title: Spring Boot Application Context Event
 category: Server-Side
+date: 2021-07-07
 tags: [SpringBoot]
 ---
 

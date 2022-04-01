@@ -68,7 +68,7 @@ const Categories = ({location}) => {
           <div className="is-divider small" />
           <ul className='category__item__recent'>
             {recent && recent.map(i => (
-              <li className="recent-posts">
+              <li className="recent-posts" key={`recent-post-${i.slug}`}>
                 <Link key={i.slug} to={i.slug}>{i.title}</Link>
               </li>
             ))}

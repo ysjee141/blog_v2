@@ -18,13 +18,17 @@ nav.gnb {
     line-height: 20px;
     flex: 2;
     padding-left: 10px;
-    span {
-      font-size: .625em;
-      font-weight: normal;
-      display: block;
-      margin-top: 4px;
+    a {
+      font-size: 20px;
+      span {
+        font-size: .625em;
+        font-weight: normal;
+        display: block;
+        margin-top: 4px;
+      }
     }
   }
+
   ul.gnb__menu {
     @media screen  and (max-width: 600px) {
       display: none;
@@ -86,7 +90,7 @@ nav.gnb {
     transition: 0.2s;
     padding-right: 10px;
     svg {
-      height: 1.3em;
+      height: 1em;
       color: #6f777d;
       &:hover {
         color: #53595e;

@@ -2,11 +2,17 @@ import * as React from "react"
 import {graphql, Link} from "gatsby"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 
-const BlogPostTemplate = ({ data, location }) => {
+const BlogPostTemplate = ({data, location}) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata?.title || `Title`
-  const { previous, next } = data
+  console.log(post.frontmatter)
+  // const refs = post.frontmatter?.refs || [];
+  // console.log(refs)
+
+  const {previous, next} = data
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -21,18 +27,52 @@ const BlogPostTemplate = ({ data, location }) => {
       >
         <header>
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <p>{post.frontmatter.date}</p>
+          <i>
+            <FontAwesomeIcon icon={["far", "clock"]}/>
+            <span>{post.frontmatter.date}</span>
+          </i>
+          <i className={'blog-post-category-link'}>
+            in <Link to={`/category/${post.frontmatter?.category}`}>{post.frontmatter?.category}</Link>
+          </i>
         </header>
+        <span className="page-divider">
+          <span className="one"/>
+          <span className="two"/>
+        </span>
         <section
-          dangerouslySetInnerHTML={{ __html: post.html }}
+          dangerouslySetInnerHTML={{__html: post.html}}
           itemProp="articleBody"
         />
-        <hr />
+        {post.frontmatter.refs ? (
+          <div itemProp='postReference' className="post-reference">
+            <table>
+              <tbody>
+              <tr>
+                <td>참고자료</td>
+                <td>
+                  <ul>
+                    {post.frontmatter.refs.map(r => (
+                      <li key={`post-reference-${r}`}>
+                        <a target='_blank' href={r}>{r}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <span className="page-divider">
+            <span className="one"/>
+            <span className="two"/>
+          </span>
+        )}
         {/*<footer>*/}
         {/*  <Bio />*/}
         {/*</footer>*/}
       </article>
-      <nav className="blog-post-nav">
+      <nav className={`blog-post-nav ${post.frontmatter.refs === null && 'no-margin'}`}>
         <ul
           style={{
             display: `flex`,
@@ -45,14 +85,14 @@ const BlogPostTemplate = ({ data, location }) => {
           <li>
             {previous && (
               <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
+                <FontAwesomeIcon icon={faChevronLeft} /> {previous.frontmatter.title}
               </Link>
             )}
           </li>
           <li>
             {next && (
               <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
+                {next.frontmatter.title} <FontAwesomeIcon icon={faChevronRight} />
               </Link>
             )}
           </li>
@@ -88,6 +128,7 @@ export const pageQuery = graphql`
         description
         category
         tags
+        refs
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {

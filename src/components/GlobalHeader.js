@@ -2,26 +2,32 @@ import * as React from "react";
 import {Link} from "gatsby";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {startsWithArray} from "../utils/StringUtils";
 
 const GlobalHeader = ({location, title, children}) => {
+
+  const isPost = startsWithArray(location.pathname, ["/", "/category", "/tag"]);
+
   return (
     <nav className="gnb">
-      <Link to="/" className="site-title">
-        {title.text}
-        <span>{title.subTitle}</span>
-      </Link>
+      <div className="site-title">
+        <Link to="/">
+          {title.text}
+          <span>{title.subTitle}</span>
+        </Link>
+      </div>
       <ul className="gnb__menu">
         <li>
-          <Link to='/' activeClassName='active'>Posts</Link>
+          <Link to='/' className={isPost && 'active'}>Posts</Link>
         </li>
         <li>
-          <Link to=''>Tags</Link>
+          <Link to='/tags'>Tags</Link>
         </li>
         <li>
-          <Link to=''>Repos</Link>
+          <Link to='/repos'>Repos</Link>
         </li>
         <li>
-          <Link to=''>About</Link>
+          <Link to='/about'>About</Link>
         </li>
       </ul>
       <button className='search'>

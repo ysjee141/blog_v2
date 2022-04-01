@@ -3,8 +3,8 @@ $font-color: #444;
 @import url(https://fonts.googleapis.com/css?family=Lato);
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
 @import "mixin";
-
 @import "paging";
+@import "post";
 
 body {
   animation: fadein 2s;
@@ -52,6 +52,12 @@ body {
   font-family: Avenir,"Lato","애플 SD 산돌고딕 Neo","Apple SD Gothic Neo","나눔바른고딕",NanumBarunGothic,"나눔고딕",NanumGothic,"맑은 고딕","Malgun Gothic","돋움",dotum,AppleGothic,sans-serif;
   font-size: 20px;
   box-sizing: border-box;
+  //color: #3d4144;
+
+
+  @media screen  and (max-width: 600px) {
+    font-size: 16px;
+  }
 }
 
 main {
