@@ -40,7 +40,7 @@ const BlogListTemplate = ({ data, location, pageContext }) => {
           </p>
         ) : (
           <BlogList
-            posts={node}
+            posts={node.map(n => n.node)}
             pageInfo={pageInfo}
             pageContext={pageContext}
           />
