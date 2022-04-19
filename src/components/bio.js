@@ -13,7 +13,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faLocationDot} from "@fortawesome/free-solid-svg-icons";
 import Social from "./Social";
 
-const Bio = () => {
+const Bio = ({type}) => {
+  const viewType = type || '';
   const data = useStaticQuery(graphql`
     query BioQuery {
       site {
@@ -47,12 +48,12 @@ const Bio = () => {
   const postCount = data.allMarkdownRemark.totalCount;
 
   const tags = new Set()
-  data.allMarkdownRemark.nodes.map(n => {
+  data.allMarkdownRemark.nodes.forEach(n => {
     n.frontmatter?.tags?.filter(t => t !== '').forEach(t => tags.add(t))
   })
 
-  return (
-    <article className="bio">
+  return viewType === '' ? (
+    <article className={`bio`}>
       <div className='avatar'>
         <StaticImage
           layout="fixed"
@@ -91,6 +92,28 @@ const Bio = () => {
         </li>
         {social.map(s => (
           <Social key={s.name} social={s} isText={false}/>
+        ))}
+      </ul>
+    </article>
+  ) : (
+    <article className={'bio-simple'}>
+      <StaticImage
+        layout="fixed"
+        formats={["auto", "webp", "avif"]}
+        src="../assets/images/profile.jpg"
+        width={110}
+        height={110}
+        quality={95}
+        alt="Profile picture"
+      />
+      <div className="author__name">
+        {author.name}
+        <span>Seoul, Korea</span>
+      </div>
+      <div className='author__description'>{author.summary}</div>
+      <ul className='author__urls'>
+        {social.map(s => (
+          <Social key={s.name} social={s} isText={true}/>
         ))}
       </ul>
     </article>

@@ -43,40 +43,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
                 date
                 description
                 tags
-              }
-              excerpt
-            }
-          }
-          pageInfo {
-            currentPage
-            hasNextPage
-            hasPreviousPage
-            pageCount
-            perPage
-            totalCount
-          }
-        }
-      }    
-    `
-  )
-
-  const categoryListResult = await graphql(
-    `
-    {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-                category
-                date
-                description
-                tags
+                refs
               }
               excerpt
             }
@@ -214,6 +181,32 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       })
     })
   })
+
+  createPage({
+    path: '/about',
+    component: path.resolve("./src/templates/about-template.js"),
+    context: {
+
+    }
+  })
+
+  createPage({
+    path: '/repos',
+    component: path.resolve("./src/templates/repo-template.js"),
+    context: {
+
+    }
+  })
+
+  createPage({
+    path: '/tags',
+    component: path.resolve("./src/templates/tag-template.js"),
+    context: {
+      filter: {}
+    }
+  })
+
+
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -268,6 +261,27 @@ exports.createSchemaCustomization = ({ actions }) => {
       author: Author
       siteUrl: String
       social: [Social]
+      career: [Career]
+      skill: [Skill]
+    }
+    
+    type Skill {
+      category: String
+      name: String
+      score: Int
+    }
+    
+    type Career {
+      name: String
+      dept: String
+      date: CareerDate
+      grade: String
+      job: String
+    }
+    
+    type CareerDate {
+      from: String
+      to: String
     }
     
     type Title {
@@ -298,8 +312,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       date: Date @dateformat
       category: String! @category
       tags: [String]
-      published: Boolean!
-      refs: [String]!
+      published: Boolean
+      refs: [String]
     }
 
     type Fields {

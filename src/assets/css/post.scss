@@ -78,17 +78,65 @@ article.blog-post {
     }
   }
 
+  ul.post-tags {
+    margin-top: -25px !important;
+    margin-bottom: 40px !important;
+
+    &, li {
+      @include list-none-style;
+    }
+    li {
+      display: inline-block;
+      svg, a {
+        color: #646769;
+      }
+      svg {
+        font-size: .8em;
+        margin-right: 5px;
+      }
+      a {
+        font-size: .8em;
+        padding: 3px 5px;
+        &:hover {
+          background-color: #000;
+          color: #fff;
+        }
+      }
+    }
+  }
+
   section {
-    * {
-      font-size: 16px;
+    deckgo-highlight-code {
+      --deckgo-highlight-code-font-size: .8em;
+      --deckgo-highlight-code-font-family: 'D2Coding', monospace;
+      --deckgo-highlight-code-carbon-header-button-width: .65em;
+      --deckgo-highlight-code-carbon-header-button-height: .65em;
+      --deckgo-highlight-code-carbon-header-padding: 0.3em 1em;
+      --deckgo-lowlight-code-line-numbers-color: #888;
     }
     p {
       font-size: 0.8em;
       margin: 0 0 1.3em
     }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      margin-bottom: 10px;
+      th, td {
+        border: 1px solid #d9d9d9;
+        padding: 3px 10px;
+        font-size: .8em;
+      }
+      thead {
+        background-color: #e9e9e9;
+      }
+    }
 
     ul li, ol li {
       margin-bottom: 0.5em;
+    }
+    li {
+      font-size: 0.8em;
     }
 
     blockquote {
@@ -125,7 +173,6 @@ article.blog-post {
           li {
             margin-left: 25px;
             a {
-              font-size: .8em;
               color: #0072ff;
               text-decoration: underline;
               &:hover {
@@ -153,12 +200,43 @@ nav.blog-post-nav {
     margin-top: -50px;
   }
   ul {
+    @media screen  and (max-width: 600px) {
+      margin-top: 30px;
+    }
     li {
       padding: 0;
+      width: 48%;
       a {
+        @media screen  and (max-width: 600px) {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
         font-size: .8em;
+        padding-left: 10px;
+        position: relative;
+        &:hover {
+          text-decoration: underline;
+        }
         svg {
           font-size: .8em;
+          position: absolute;
+          left: 0;
+          top: 4px;
+        }
+      }
+      &:last-child {
+        text-align: right;
+        a {
+          padding-left: 0;
+          padding-right: 15px;
+          svg {
+            left: auto;
+            right: 0;
+          }
         }
       }
     }

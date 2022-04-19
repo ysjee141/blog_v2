@@ -1,16 +1,32 @@
 $font-color: #444;
+$main-color: #aa7cc0;
 
+@import url("//cdn.jsdelivr.net/gh/wan2land/d2coding/d2coding-full.css");
+@import url("//cdn.jsdelivr.net/gh/wan2land/d2coding/d2coding-subset.css");
+@import url("//cdn.jsdelivr.net/gh/wan2land/d2coding/d2coding-ligature-full.css");
+@import url("//cdn.jsdelivr.net/gh/wan2land/d2coding/d2coding-ligature-subset.css");
 @import url(https://fonts.googleapis.com/css?family=Lato);
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
 @import "mixin";
 @import "paging";
 @import "post";
+@import "career";
+@import "bio";
+@import "tags";
+@import "repos";
+@import "search";
 
 body {
   animation: fadein 2s;
   -moz-animation: fadein 2s; /* Firefox */
   -webkit-animation: fadein 2s; /* Safari and Chrome */
   -o-animation: fadein 2s; /* Opera */
+  font-size: 20px;
+
+  div#___gatsby{
+    min-height: 100vh;
+    position: relative;
+  }
 }
 @keyframes fadein {
   from {
@@ -50,7 +66,6 @@ body {
 
 * {
   font-family: Avenir,"Lato","애플 SD 산돌고딕 Neo","Apple SD Gothic Neo","나눔바른고딕",NanumBarunGothic,"나눔고딕",NanumGothic,"맑은 고딕","Malgun Gothic","돋움",dotum,AppleGothic,sans-serif;
-  font-size: 20px;
   box-sizing: border-box;
   //color: #3d4144;
 
@@ -78,21 +93,22 @@ div.global-wrapper {
   margin-right: auto;
 
   footer {
-    @media screen  and (max-width: 600px) {
-      padding-left: 15px;
-      display: inherit;
-    }
     * {
       color: #fff !important;
     }
     display: flex;
-    font-size: 0.7em;
+    font-size: 0.8em;
     background-color: #aa7cc0;
     clear: both;
     width: 100%;
     position: absolute;
     left: 0;
+    bottom: 0;
     padding: 13px calc((100% - 1300px) / 2);
+    @media screen  and (max-width: 600px) {
+      padding-left: 15px;
+      display: inherit;
+    }
     div.copyright {
       flex: 1;
       font-size: 1em;
@@ -117,16 +133,18 @@ div.global-wrapper {
         display: inline-block;
       }
       li {
-        font-size: .7em;
+        @media screen  and (max-width: 600px) {
+          font-size: .8em;
+        }
         margin-right: 10px;
         &.follow__title {
           font-weight: bold;
         }
         svg {
           margin-right: 5px;
-          height: 0.8em;
           position: relative;
-          top: 1px;
+          top: 2px;
+          height: 1.2em;
         }
       }
     }
@@ -143,6 +161,9 @@ div {
     margin: 0.66em 0 1em;
     width: 100%;
     max-width: 30px;
+    &.wide {
+      max-width: none;
+    }
   }
 }
 
@@ -154,7 +175,7 @@ a {
 @import "gnb";
 
 section.contents {
-  padding: 60px 20px 20px;
+  padding: 60px 20px 70px;
   position: relative;
   display: flex;
   &.block {
@@ -165,3 +186,10 @@ section.contents {
 }
 
 @import 'archive-list';
+
+div.category__sub-title {
+  font-weight: bold;
+  font-size: 1.25em;
+  padding: 7px 0;
+  margin-bottom: -15px;
+}

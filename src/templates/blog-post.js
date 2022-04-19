@@ -3,15 +3,11 @@ import {graphql, Link} from "gatsby"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
+import {faChevronLeft, faChevronRight, faTags} from "@fortawesome/free-solid-svg-icons";
 
 const BlogPostTemplate = ({data, location}) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata?.title || `Title`
-  console.log(post.frontmatter)
-  // const refs = post.frontmatter?.refs || [];
-  // console.log(refs)
-
   const {previous, next} = data
 
   return (
@@ -39,6 +35,16 @@ const BlogPostTemplate = ({data, location}) => {
           <span className="one"/>
           <span className="two"/>
         </span>
+        {post.frontmatter.tags && (
+          <ul className="post-tags">
+            <li><FontAwesomeIcon icon={faTags}/></li>
+            {post.frontmatter.tags?.map(t => (
+              <li key={`post-tags-${t}`}>
+                <Link to={`/tag/${t}`}>#{t}</Link>
+              </li>
+            ))}
+          </ul>
+        )}
         <section
           dangerouslySetInnerHTML={{__html: post.html}}
           itemProp="articleBody"
@@ -53,7 +59,7 @@ const BlogPostTemplate = ({data, location}) => {
                   <ul>
                     {post.frontmatter.refs.map(r => (
                       <li key={`post-reference-${r}`}>
-                        <a target='_blank' href={r}>{r}</a>
+                        <a target='_blank'rel={'noreferrer'} href={r}>{r}</a>
                       </li>
                     ))}
                   </ul>
@@ -85,14 +91,14 @@ const BlogPostTemplate = ({data, location}) => {
           <li>
             {previous && (
               <Link to={previous.fields.slug} rel="prev">
-                <FontAwesomeIcon icon={faChevronLeft} /> {previous.frontmatter.title}
+                <FontAwesomeIcon icon={faChevronLeft}/> {previous.frontmatter.title}
               </Link>
             )}
           </li>
           <li>
             {next && (
               <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} <FontAwesomeIcon icon={faChevronRight} />
+                {next.frontmatter.title} <FontAwesomeIcon icon={faChevronRight}/>
               </Link>
             )}
           </li>

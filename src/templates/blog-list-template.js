@@ -1,41 +1,50 @@
 import * as React from "react"
-import {graphql} from "gatsby"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import {library} from "@fortawesome/fontawesome-svg-core";
-import {far} from '@fortawesome/free-regular-svg-icons'
-import BlogList from "../components/BlogList";
-import {CategoryMeta} from "../assets/metadata";
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { far } from "@fortawesome/free-regular-svg-icons"
+import BlogList from "../components/BlogList"
+import { CategoryMeta } from "../assets/metadata"
 
-library.add(far);
+library.add(far)
 
-const BlogListTemplate = ({data, location, pageContext}) => {
+const BlogListTemplate = ({ data, location, pageContext }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.edges.map(i => i.node)
-  const pageInfo = data.allMarkdownRemark.pageInfo
-  const {type, value} = pageContext.info || {type: '', value: ''}
+  // const pageInfo = data.allMarkdownRemark.pageInfo
+
+  const { edges: node, pageInfo } = data.allMarkdownRemark
+  const { type, value } = pageContext.info || { type: "", value: "" }
 
   return (
     <Layout location={location} title={siteTitle}>
-      <Seo title={`page ${pageInfo.currentPage} of ${pageInfo.pageCount}`}/>
+      <Seo title={`page ${pageInfo.currentPage} of ${pageInfo.pageCount}`} />
       <section className="contents__wrapper">
-        {type !== '' ? (<div className='archive__list__type'>
-          <small>{type.toUpperCase()}</small>
-          <span>{value} {CategoryMeta[value] && (
-            `| ${CategoryMeta[value]}`
-          )}</span>
-        </div>) : (
+        {type !== "" ? (
+          <div className="archive__list__type">
+            <small>{type.toUpperCase()}</small>
+            <span>
+              {value} {CategoryMeta[value] && `| ${CategoryMeta[value]}`}
+            </span>
+          </div>
+        ) : (
           <div className="archive__list__title">Posts</div>
         )}
 
-        {posts.length === 0 ? (
+        {node.length === 0 ? (
           <p>
             No blog posts found. Add markdown posts to "content/blog" (or the
             directory you specified for the "gatsby-source-filesystem" plugin in
             gatsby-config.js).
           </p>
-        ) : (<BlogList posts={posts} pageInfo={pageInfo}/>)}
-
+        ) : (
+          <BlogList
+            posts={node}
+            pageInfo={pageInfo}
+            pageContext={pageContext}
+          />
+        )}
       </section>
     </Layout>
   )
@@ -44,7 +53,11 @@ const BlogListTemplate = ({data, location, pageContext}) => {
 export default BlogListTemplate
 
 export const pageQuery = graphql`
-  query blogListQuery($skip: Int!, $limit: Int!, $filter: MarkdownRemarkFilterInput) {
+  query blogListQuery(
+    $skip: Int!
+    $limit: Int!
+    $filter: MarkdownRemarkFilterInput
+  ) {
     site {
       siteMetadata {
         title {
@@ -53,7 +66,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMarkdownRemark( 
+    allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
       filter: $filter
       limit: $limit
@@ -67,7 +80,7 @@ export const pageQuery = graphql`
           frontmatter {
             title
             category
-            date
+            date(formatString: "MMM DD, YYYY")
             description
             tags
           }

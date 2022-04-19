@@ -40,9 +40,7 @@ article.bio {
 
   ul {
     &,li {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+      @include list-none-style;
     }
     width: 100%;
     display: table;
@@ -91,6 +89,70 @@ article.bio {
           span {
             font-size: 14px;
             box-sizing: border-box;
+          }
+        }
+      }
+    }
+  }
+}
+
+article.bio-simple {
+  position: relative;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  padding: 20px 20px 30px 140px;
+  margin-top: 20px;
+
+  div {
+    &.gatsby-image-wrapper {
+      position: absolute;
+      left: 20px;
+      img {
+        left: 0;
+        padding: 5px;
+        border: 1px solid #f2f3f3;
+        max-width: 110px;
+        border-radius: 50%;
+        box-sizing: border-box;
+      }
+    }
+
+    &.author__name {
+      font-size: 1.3em;
+      text-transform: uppercase;
+      display: block;
+      font-weight: bold;
+      span {
+        font-size: .55em;
+        font-weight: normal;
+        opacity: .7;
+        padding-left: 10px;
+      }
+    }
+    &.author__description {
+      color: #333;
+      font-size: 1em;
+    }
+  }
+
+  ul {
+    &,li {
+      @include list-none-style;
+    }
+    width: 100%;
+    &.author__urls {
+      li {
+        display: inline-block;
+        font-size: .8em;
+        margin-right: 15px;
+        svg {
+          color: #3d4144;
+          margin-right: 5px;
+          &[data-icon='instagram'] {
+            color: #517fa4;
+          }
+          &[data-icon='github'] {
+            color: #171516;
           }
         }
       }

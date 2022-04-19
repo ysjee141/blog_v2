@@ -1,0 +1,135 @@
+section.contents.search {
+  display: none;
+  padding-top: 70px;
+  padding-bottom: 70px;
+
+  &.active {
+    display: block;
+  }
+
+  > section.contents__wrapper {
+    width: 100% !important;
+    position: relative;
+
+    svg {
+      position: absolute;
+      font-size: 1.2em;
+      font-weight: lighter;
+      top: 30px;
+      left: 10px;
+      color: #6f777d;
+    }
+
+    input {
+      //border: none;
+      border: 1px solid #b5aaaa;
+      border-radius: 5px;
+      width: 100%;
+      padding: 10px 0 10px 50px;
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      background-color: transparent;
+      &:focus {
+        outline: none;
+      }
+    }
+    ul.search__result__tags__list {
+      &, li {
+        @include list-none-style;
+      }
+      li.search__result__tags__list__item {
+        display: inline-block;
+        margin-bottom: 5px;
+        font-size: .8em;
+        font-style: normal;
+        border: 1px solid #d9d9d9;
+        padding: 4px 10px;
+        border-radius: 50px;
+        margin-right: 5px;
+        & + div.search__result__list {
+          margin-top: 10px !important;
+        }
+      }
+    }
+
+    div.search__result__count {
+      font-size: .6em;
+      font-weight: normal;
+      float: right;
+      margin-top: 10px;
+    }
+
+    ul.search__result__list {
+      &, li {
+        @include list-none-style;
+      }
+
+      li.search__result__item {
+        position: relative;
+        padding: 10px 0;
+        border-bottom: 1px solid #d9d9d9;
+
+        section.search__result__item__date {
+          display: inline-block;
+          width: 100px;
+          text-align: center;
+          padding: 0 10px;
+          position: absolute;
+          top: 5px;
+
+          p {
+            font-size: 1.75em;
+            padding: 0;
+            font-weight: bold;
+            font-family: "Montserrat", sans-serif;
+            margin: 0 0 -15px;
+            color: #aa7cc0;
+          }
+
+          i {
+            font-size: .7em;
+            font-style: normal;
+            font-family: "Montserrat", sans-serif;
+          }
+        }
+
+        a {
+          color: #3d4144;
+          width: 100%;
+          padding-left: 110px;
+          display: inline-block;
+          padding-right: 10px;
+
+          strong {
+            font-size: 1em;
+            display: block;
+          }
+
+          span {
+            margin-top: 10px;
+            font-size: .8em;
+            display: block;
+          }
+
+          ul.search__result__item__tags {
+            &, li {
+              @include list-none-style
+            }
+
+            display: inline-block;
+
+            li {
+              font-size: .8em;
+              display: inline-block;
+              padding: 3px 0;
+
+              &:not(:last-child) {
+                padding-right: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

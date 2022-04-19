@@ -2,6 +2,7 @@
 title: Spring Framework IoC, DI란
 category: Spring
 tags: [Spring, IoC, DI]
+date: 2020-12-10 15:00:00
 refs:
     - https://biggwang.github.io/2019/08/31/Spring/IoC,%20DI%EB%9E%80%20%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C/
     - https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Cache-Control

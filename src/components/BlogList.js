@@ -1,15 +1,16 @@
-import {Link} from "gatsby";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Pagination from "./pagination";
-import * as React from "react";
+import { Link } from "gatsby"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Pagination from "./pagination"
+import * as React from "react"
 
-const BlogList = ({posts, pageInfo}) => {
+const BlogList = ({ posts, pageInfo, pageContext }) => {
+  console.log(posts)
   return (
     <div>
-      <ol className='archive__list'>
+      <ol className="archive__list">
         {posts.map(post => {
-          const title = post.frontmatter.title || post.fields.slug
-          const tags = post.frontmatter.tags || [];
+          const title = post.frontmatter?.title || post.fields.slug
+          const tags = post.frontmatter.tags || []
 
           return (
             <li key={post.fields.slug}>
@@ -26,7 +27,7 @@ const BlogList = ({posts, pageInfo}) => {
                   </h3>
                   {post.frontmatter.date && (
                     <small>
-                      <FontAwesomeIcon icon={["far", "clock"]}/>
+                      <FontAwesomeIcon icon={["far", "clock"]} />
                       <span>{post.frontmatter.date}</span>
                     </small>
                   )}
@@ -38,16 +39,25 @@ const BlogList = ({posts, pageInfo}) => {
                     }}
                     itemProp="description"
                   />
-                  {tags && tags.filter(t => t !== '').map(t => (
-                    <Link key={`list-tag-${t}`} to={`/tag/${t}`} className='archive__tag'>#{t}</Link>
-                  ))}
+                  {tags &&
+                    tags
+                      .filter(t => t !== "")
+                      .map(t => (
+                        <Link
+                          key={`list-tag-${t}`}
+                          to={`/tag/${t}`}
+                          className="archive__tag"
+                        >
+                          #{t}
+                        </Link>
+                      ))}
                 </section>
               </article>
             </li>
           )
         })}
       </ol>
-      <Pagination pageInfo={pageInfo}/>
+      <Pagination pageInfo={pageInfo} pageContext={pageContext} />
     </div>
   )
 }

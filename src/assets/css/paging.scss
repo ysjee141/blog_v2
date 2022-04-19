@@ -20,7 +20,7 @@ div.pagination {
     border-radius: 5px;
     margin-right: 10px;
     &.disable {
-      cursor: default;
+      pointer-events: none;
       color: #d9d9d9;
       &:hover {
         background-color: inherit;

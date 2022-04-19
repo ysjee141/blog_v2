@@ -10,7 +10,7 @@ import BlogList from "../components/BlogList";
 // library.add(far);
 
 const BlogIndex = ({data, location}) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
+  const siteTitle = data.site.siteMetadata?.title || {text: `Title`}
   const posts = data.allMarkdownRemark.nodes
   const pageInfo = data.allMarkdownRemark.pageInfo
 
@@ -62,7 +62,7 @@ export const pageQuery = graphql`
         frontmatter {
           title
           category
-          date
+          date(formatString: "MMM DD, YYYY")
           description
           tags
         }

@@ -1,0 +1,37 @@
+ul.tag__archive {
+  &, li {
+    @include list-none-style;
+  }
+  display: grid;
+  grid-column-gap: 2em;
+  grid-template-columns: repeat(2, 1fr);
+  @media screen and (min-width: 64em) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  margin: 1.414em 0;
+  padding: 0;
+  font-size: .75em;
+
+  li {
+    margin-bottom: 0.5em;
+    padding: 0.25em;
+    a {
+      border-bottom: 1px solid #d9d9d9;
+      width: 100%;
+      display: flex;
+      padding: .3em 10px;
+      strong {
+        flex: 1;
+      }
+      span {
+        float: right;
+      }
+      &:hover {
+        background-color: $main-color;
+        color: #fff;
+        font-weight: 100;
+      }
+    }
+
+  }
+}

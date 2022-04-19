@@ -9,7 +9,9 @@ import Categories from "./Categories";
 import {startsWithArray} from "../utils/StringUtils";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {far} from "@fortawesome/free-regular-svg-icons";
-import { defineCustomElements as deckDeckGoHighlightElement } from "@deckdeckgo/highlight-code/dist/loader";
+import {defineCustomElements as deckDeckGoHighlightElement} from "@deckdeckgo/highlight-code/dist/loader";
+import SearchPosts from "./SearchPosts";
+import {useState} from "react";
 
 deckDeckGoHighlightElement();
 library.add(far);
@@ -31,10 +33,15 @@ const Layout = ({location, title, children}) => {
     }
   }
 `).site.siteMetadata.social;
+  const [toggleSearch, setToggleSearch] = useState(false);
+  const searchEvent = (data) => {
+    setToggleSearch(data)
+  }
+
   return (
     <div className="global-wrapper">
-      <GlobalHeader title={title} location={location}/>
-      <section className={`contents ${!isShowSidebar && 'block'}`}>
+      <GlobalHeader title={title} location={location} searchEvent={searchEvent}/>
+      <section className={`contents ${!isShowSidebar && 'block'}`} style={toggleSearch ? {display: 'none'} : {}}>
         {children}
         {isShowSidebar && (
           <section className='sidebar'>
@@ -43,6 +50,7 @@ const Layout = ({location, title, children}) => {
           </section>
         )}
       </section>
+      <SearchPosts isVisible={toggleSearch} />
       <footer>
         <div className="copyright">
           © {new Date().getFullYear()} HAPPL. Built with{` `}
